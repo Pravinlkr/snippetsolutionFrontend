@@ -35,23 +35,27 @@ export default {
   components: { BrowseByCategory },
     data (){
         return{
-            initCategoryList : [
-                {id:1, name:'javascript'},
-                {id:2, name:'css'},
-                {id:3, name:'python'},
-                {id:4, name:'php'},
-                {id:5, name:'java'},
-                {id:6, name:'html'},
-                {id:7, name:'sql'},
-                {id:8, name:'c'},
-                {id:9, name:'c++'},
-                {id:10, name:'scss'}
-                ]
+            // initCategoryList : [
+            //     {id:1, name:'javascript', parent:'javascript'},
+            //     {id:2, name:'css', parent:'css'},
+            //     {id:3, name:'python', parent:'python'},
+            //     {id:4, name:'php', parent:'php'},
+            //     {id:5, name:'java', parent:'java'},
+            //     {id:6, name:'html', parent:'html'},
+            //     {id:7, name:'sql', parent:'sql'},
+            //     {id:8, name:'c', parent:'c'},
+            //     {id:9, name:'c++', parent:'cpp'},
+            //     {id:10, name:'tailwind', parent:'html'},
+            //     {id:11, name:'node js', parent:'javascript'},
+            //     {id:12, name:'vue js', parent:'javascript'},
+            //     {id:13, name:'react js', parent:'javascript'},
+            //     {id:14, name:'laravel', parent:'php'},
+            //     ]
         }    
     },
 
     mounted() {
-        localStorage.setItem('categories',JSON.stringify(this.initCategoryList))
+        // localStorage.setItem('categories',JSON.stringify(this.initCategoryList))
     },
 }
 </script>

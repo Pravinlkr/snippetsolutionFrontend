@@ -7,9 +7,9 @@
 
     <div class="mx-6">
         <div><h2 class="pb-">{{questionName}}</h2></div>
-        <div style="width:90%; height:auto;">
+        <div style="width:90%; height:auto; font-size:16px;">
 <pre>
-    <code v-highlight class="sql" v-html="answer" style="padding: 1% 5%;">
+    <code v-highlight :class="parentCategory" v-html="answer" style="padding: 2% 5%; line-height:1.5;">
     </code>
 </pre>
         </div>
@@ -17,15 +17,20 @@
         <related-quesitons :categoryName="categoryName"></related-quesitons>
     </div>
     </div>
-  <!-- <p>{{$route.params.question}}</p> -->
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     data(){
         return{
+            categoryList: [],
             categoryName:'',
+            categoryId:null,
+            parentCategory:'',
             questionName:'',
+            questionArray:[],
+            questionAndAnswer: [],
             answer:'',
             breadCrumbsitems: [
                 {
@@ -46,21 +51,52 @@ export default {
             ]
         }
     },
+    methods:{
+        parseQuestion(url){
+            let question = url.trim()
+            question = question.replaceAll('-',' ')
+            return question
+        },
+        async fetchQuestion(){
+            this.loading = true
+            this.questionArray = await axios.get(`${process.env.API_BASE_URL}/category/${this.categoryId}`)
+            this.questionArray.data.forEach(element => {
+                if(element.categoryId == this.categoryId) {
+                    const obj = { 
+                        question: element.question,
+                        answer: element.answers[0]
+                    }
+                    this.questionAndAnswer.push(obj)
+                }
+            })
+            console.log('73 ',this.questionAndAnswer)
+            this.questionAndAnswer.forEach(element =>{
+            if(element.question == this.questionName){
+                this.answer = element.answer
+            }
+        })
+            this.loading = false
+        }
+    },
     created(){
         this.categoryName = this.$route.params.categories
         this.breadCrumbsitems[1].text = this.categoryName
         this.breadCrumbsitems[1].href = '/'+this.categoryName
 
-        this.questionName = this.$route.params.question
+        let quest = this.$route.params.question
+        this.breadCrumbsitems[2].href = '/'+quest
+        this.questionName = this.parseQuestion(quest)
         this.breadCrumbsitems[2].text = this.questionName
-        this.breadCrumbsitems[2].href = '/'+this.questionName
-
-        
     },
     mounted() {
-        if(localStorage.getItem('questionAnswer')){
-            this.answer = JSON.parse(localStorage.getItem('questionAnswer'))
-        }
+        this.categoryList = JSON.parse(localStorage.getItem('categories'))
+        this.categoryList.forEach(element =>{
+            if(element.name == this.categoryName){
+                this.parentCategory = element.parent
+                this.categoryId = element.id
+            }
+        })
+        this.fetchQuestion()
     },
 
 }

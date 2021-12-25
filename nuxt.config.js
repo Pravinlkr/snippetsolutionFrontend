@@ -26,6 +26,7 @@ export default {
 
     buildModules: [
         '@nuxtjs/vuetify',
+        '@nuxtjs/dotenv',
     ],
 
     modules: [

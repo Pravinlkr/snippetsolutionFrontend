@@ -5,17 +5,13 @@
         md="8" class="px-6 py-4">
             <h4>Add a Solution, which you think might be useful for other developers</h4>
             <div style="width:70%; height:40px" class="my-6">
-            <v-autocomplete 
-              outlined 
-              dense 
-              clearable 
-              v-model="questionValue"
-              placeholder="Question ..." 
-              class="autocompleteClass">
-              <template slot="no-data">
-                <div></div>
-              </template>
-            </v-autocomplete>
+              <v-text-field
+                placeholder="Add Question"
+                outlined
+                dense
+                clearable
+                v-model="questionValue"
+              ></v-text-field>
             </div>
             <div style="width:70%; height:40px" class="my-6">
             <v-autocomplete 
@@ -29,7 +25,7 @@
               placeholder="Please choose best suitable category" 
               class="autocompleteClass">
               <template slot="no-data">
-                <p class="text-center">No such category found, Please choose another one</p>
+                <p class="text-center">No such category found, search again</p>
               </template>
               </v-autocomplete>
             </div>
@@ -39,7 +35,7 @@
                 no-resize
                 clearable
                 rows="6"
-                class="answerBox"
+                class="answerBox hide-scrollbar"
                 label="Enter Your Code Here"
                 v-model="answerCode"
               ></v-textarea>
@@ -77,26 +73,43 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data(){
     return{
       questionValue:'',
       categorySelected:-1,
       answerCode:'',
-      categoryList:[]
+      categoryList:[],
+      questionArray:[]
     }
   },
   methods:{
-    saveQuestion(){
-      console.log('91 ',this.questionValue)
-      console.log('92 ',this.categorySelected)
-      console.log('93 ',this.answerCode)
-      // localStorage.setItem('questionAnswer',JSON.stringify(this.answerCode))
-      this.answerCode = ''
+    parseCode(code){
+      code = code.replaceAll('<','&#x3C;')
+      code = code.replaceAll('>','&#x3E;')
+      return code
+    },
+    async saveQuestion(){
+      if (this.questionValue.trim().length && this.categorySelected && this.answerCode.trim().length) {
+        this.answerCode = this.parseCode(this.answerCode)
+        await axios.post(`${process.env.API_BASE_URL}/snippet`,{question:this.questionValue, answers:this.answerCode, categoryId:this.categorySelected})
+        this.answerCode = ''
+        this.categorySelected = -1
+        this.questionValue = ''
+      }
     }
   },
   mounted() {
     this.categoryList = JSON.parse(localStorage.getItem('categories'))
+    this.categoryList.sort(function(a, b){
+    if(a.name < b.name) { return -1; }
+    if(a.name > b.name) { return 1; }
+    return 0;
+})
+    // if(localStorage.getItem('questionAnswer')){
+    //   this.questionArray = JSON.parse(localStorage.getItem('questionAnswer'))
+    // }
   },
 }
 </script>
@@ -104,5 +117,14 @@ export default {
 .answerBox {
   font-size: 10px !important;
   line-height: 1.2;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+.hide-scrollbar {
+   -ms-overflow-style: none;  /* IE and Edge */
+   scrollbar-width: none;  /* Firefox */
 }
 </style>
