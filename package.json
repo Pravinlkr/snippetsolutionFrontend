@@ -7,7 +7,7 @@
         "build": "nuxt build",
         "generate": "nuxt generate",
         "start": "node server.js",
-        "heroku-postbuild": "nuxt build"
+        "heroku-postbuild": "nuxt build & nuxt generate"
     },
     "dependencies": {
         "@nuxtjs/dotenv": "^1.4.1",
