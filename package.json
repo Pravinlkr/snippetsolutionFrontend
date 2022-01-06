@@ -4,10 +4,10 @@
     "private": true,
     "scripts": { 
         "dev": "nuxt",
-        "build": "npm run build",
-        "generate": "npm run generate",
-        "start": "npm run start",
-        "heroku-postbuild": "npm run build"
+        "build": "nuxt build",
+        "generate": "nuxt generate",
+        "start": "nuxt start",
+        "heroku-postbuild": "nuxt build"
     },
     "dependencies": {
         "@nuxtjs/dotenv": "^1.4.1",
