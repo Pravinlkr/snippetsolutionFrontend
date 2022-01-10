@@ -6,7 +6,7 @@
         "dev": "nuxt",
         "build": "nuxt build",
         "generate": "nuxt generate",
-        "start": "node server.js",
+        "start": "nuxt start",
         "heroku-postbuild": "nuxt build & nuxt generate"
     },
     "dependencies": {
