@@ -2,7 +2,7 @@
     "name": "snippetsolution",
     "version": "1.0.0",
     "private": true,
-    "scripts": { 
+    "scripts": {
         "dev": "nuxt",
         "build": "nuxt build",
         "generate": "nuxt generate",
@@ -10,7 +10,6 @@
         "heroku-postbuild": "nuxt build & nuxt generate"
     },
     "dependencies": {
-        "@nuxtjs/dotenv": "^1.4.1",
         "axios": "^0.24.0",
         "core-js": "^3.15.1",
         "express": "^4.17.2",
@@ -19,6 +18,7 @@
         "vuetify": "^2.5.5"
     },
     "devDependencies": {
+        "@nuxtjs/dotenv": "^1.4.1",
         "@nuxtjs/vuetify": "^1.12.1"
     }
 }
