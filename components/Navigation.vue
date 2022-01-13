@@ -25,6 +25,7 @@
         prepend-inner-icon="mdi-magnify" 
         class="autocompleteClass"
         return-object
+        hide-no-data
         >
         </v-autocomplete>
       </div>

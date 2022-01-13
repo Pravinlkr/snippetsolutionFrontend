@@ -3,7 +3,7 @@
       <v-row>
           <v-col
         md="8" class="px-6 py-4">
-            <h4>Add a Solution, which you think might be useful for other developers</h4>
+            <h4>Add a Solution, which you think may be useful for other developers</h4>
             <div style="width:70%; height:40px" class="my-6">
               <v-text-field
                 placeholder="Add Question"
