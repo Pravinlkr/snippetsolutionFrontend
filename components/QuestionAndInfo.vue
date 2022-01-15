@@ -60,11 +60,11 @@
             </div>
             <div class="d-flex justify-space-between py-3">
                <div><span><v-btn fab dark x-small color="warning" class="mr-2"><v-icon dark> mdi-clipboard </v-icon></v-btn><b> Total Questions</b></span></div>
-               <h3 class="mt-1">22</h3>
+               <h3 class="mt-1">{{totalQuestions}}</h3>
             </div>
             <div class="d-flex justify-space-between py-3">
                <div><span><v-btn fab dark x-small color="success" class="mr-2"><v-icon dark> mdi-clipboard-edit </v-icon></v-btn><b> Total Solutions</b></span></div>
-               <h3 class="mt-1">37</h3>
+               <h3 class="mt-1">{{totalAnswers}}</h3>
             </div>
         </div>
         </v-col>
@@ -77,6 +77,8 @@ import axios from 'axios'
 export default {
   data(){
     return{
+      totalQuestions: 0,
+      totalAnswers: 0,
       questionValue:'',
       categorySelected:-1,
       answerCode:'',
@@ -100,16 +102,17 @@ export default {
       }
     }
   },
-  mounted() {
+  async mounted() {
     this.categoryList = JSON.parse(localStorage.getItem('categories'))
     this.categoryList.sort(function(a, b){
     if(a.name < b.name) { return -1; }
     if(a.name > b.name) { return 1; }
     return 0;
-})
-    // if(localStorage.getItem('questionAnswer')){
-    //   this.questionArray = JSON.parse(localStorage.getItem('questionAnswer'))
-    // }
+    })
+    
+    const response = await axios.get(`https://snippet-solution-backend.herokuapp.com/snippet/qa/all`)
+    this.totalQuestions = response.data.questions
+    this.totalAnswers = response.data.solutions
   },
 }
 </script>
