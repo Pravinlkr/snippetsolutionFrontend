@@ -45,7 +45,7 @@ export default {
     methods:{
         async addCategoryToDb () {
             if(this.categoryName.trim().length && this.parentName.trim().length) {
-                await axios.post(`${process.env.API_BASE_URL}/category/`,{category:this.categoryName, parent:this.parentName})
+                await axios.post(`https://snippet-solution-backend.herokuapp.com/category/`,{category:this.categoryName, parent:this.parentName})
                 this.categoryName = ''
                 this.parentName = ''
             }

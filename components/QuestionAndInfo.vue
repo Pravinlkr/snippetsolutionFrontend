@@ -93,7 +93,7 @@ export default {
     async saveQuestion(){
       if (this.questionValue.trim().length && this.categorySelected && this.answerCode.trim().length) {
         this.answerCode = this.parseCode(this.answerCode)
-        await axios.post(`${process.env.API_BASE_URL}/snippet`,{question:this.questionValue, answers:this.answerCode, categoryId:this.categorySelected})
+        await axios.post(`https://snippet-solution-backend.herokuapp.com/snippet`,{question:this.questionValue, answers:this.answerCode, categoryId:this.categorySelected})
         this.answerCode = ''
         this.categorySelected = -1
         this.questionValue = ''

@@ -87,7 +87,7 @@ export default {
       },
       async fetchQuestion (val) {
         this.suggestedQuestions = []
-         const response = await axios.get(`${process.env.API_BASE_URL}/snippet?search=${val}`)
+         const response = await axios.get(`https://snippet-solution-backend.herokuapp.com/snippet?search=${val}`)
           this.suggestedQuestions = response.data
         
       }

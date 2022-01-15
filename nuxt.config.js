@@ -26,7 +26,6 @@ export default {
 
     buildModules: [
         '@nuxtjs/vuetify',
-        '@nuxtjs/dotenv',
     ],
 
     modules: [
@@ -51,9 +50,5 @@ export default {
             }
         }
     },
-    dotenv: {
-        systemvars: true
-    },
-
     build: {}
 }

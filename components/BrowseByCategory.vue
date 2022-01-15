@@ -38,8 +38,7 @@ export default {
         }
     },
     async mounted() {
-      console.log('41 ', process.env.API_BASE_URL)
-      this.latestCategoryList = await axios.get(`${process.env.API_BASE_URL}/category/list`)
+      this.latestCategoryList = await axios.get(`https://snippet-solution-backend.herokuapp.com/category/list`)
       this.latestCategoryList.data.forEach(element => {
         let obj = {
           id:element._id,

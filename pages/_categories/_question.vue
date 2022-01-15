@@ -59,7 +59,7 @@ export default {
         },
         async fetchQuestion(){
             this.loading = true
-            this.questionArray = await axios.get(`${process.env.API_BASE_URL}/category/${this.categoryId}`)
+            this.questionArray = await axios.get(`https://snippet-solution-backend.herokuapp.com/category/${this.categoryId}`)
             this.questionArray.data.forEach(element => {
                 if(element.categoryId == this.categoryId) {
                     const obj = { 
@@ -69,7 +69,6 @@ export default {
                     this.questionAndAnswer.push(obj)
                 }
             })
-            console.log('73 ',this.questionAndAnswer)
             this.questionAndAnswer.forEach(element =>{
             if(element.question == this.questionName){
                 this.answer = element.answer
