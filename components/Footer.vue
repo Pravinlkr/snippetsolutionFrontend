@@ -22,7 +22,7 @@
       </v-card-text>
 
       <v-card-text class="white--text" style="padding:1% 15%;">
-        Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+        Snippet solution is a notes saving tool aimed for software developer to fasten their coding skills while helping them with a snippet to their problems that are hard to find even on the internet. The focus of snippet solution is to provide solutions for problems you face while coding at your office, at your home for your own software, a simple or complex college project or even logical programs. Being a real developer means helping people with your skill so do become a member and help people to find answer of the problem you face while working.
       </v-card-text>
       <v-row justify="center"
       no-gutters> 
@@ -34,7 +34,12 @@
         rounded
         class="my-2"
       >
-        {{ link }}
+      <router-link
+        :to="link.path"
+        tag="v-btn"
+      >
+        {{ link.name }}
+      </router-link>
       </v-btn>
       </v-row>
       <v-divider></v-divider>
@@ -56,11 +61,11 @@ export default {
                 'mdi-linkedin'
             ],
             links: [
-                'Home',
-                'About Us',
-                'Team',
-                'FAQ',
-                'Contact Us',
+                {name: 'Home', path: '/' },
+                {name: 'About Us', path: '/About'},
+                {name: 'Team', path: '/Team'},
+                {name:'FAQ', path: '/Faqs'},
+                {name: 'Contact Us', path: '/Contact'}
             ],
         }
     }
