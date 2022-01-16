@@ -1,10 +1,11 @@
 <template>
-  <v-container class="grey lighten-5 my-6">
-      <v-row>
+  <v-container class="grey lighten-5 my-4">
+      <v-row no-gutters>
           <v-col
-        md="8" class="px-6 py-4">
+          cols="12"
+        sm="8" class="px-6 py-4">
             <h4>Add a Solution, which you think may be useful for other developers</h4>
-            <div style="width:70%; height:40px" class="my-6">
+            <div class="my-6 questionAndCategoryBox">
               <v-text-field
                 placeholder="Add Question"
                 outlined
@@ -13,7 +14,7 @@
                 v-model="questionValue"
               ></v-text-field>
             </div>
-            <div style="width:70%; height:40px" class="my-6">
+            <div class="my-6 questionAndCategoryBox">
             <v-autocomplete 
               outlined 
               dense 
@@ -22,14 +23,14 @@
               :items="categoryList"
               item-text="name"
               item-value="id"
-              placeholder="Please choose best suitable category" 
+              placeholder="Choose best suitable category" 
               class="autocompleteClass">
               <template slot="no-data">
                 <p class="text-center">No such category found, search again</p>
               </template>
               </v-autocomplete>
             </div>
-            <div style="width:70%; height:150px;" class="mb-4">
+            <div class="mb-4 answerBoxContainer">
               <v-textarea
                 outlined
                 no-resize
@@ -41,7 +42,7 @@
               ></v-textarea>
             </div>
             <v-btn
-            class="ma-2"
+            class="my-2"
             outlined
             color="blue"
             @click="saveQuestion()"
@@ -50,8 +51,11 @@
             </v-btn>
         </v-col>
           <v-col
-        md="4">
-        <div style="background-color:white; width:100%; padding:2% 5%; margin-top:10%;">
+          order="first"
+          order-sm="last"
+          cols="12"
+        sm="4">
+        <div class="statsContainer">
             <h4 class="text-center py-2">Current Stats</h4>
             <hr>
             <div class="d-flex justify-space-between py-3">
@@ -121,13 +125,33 @@ export default {
   font-size: 10px !important;
   line-height: 1.2;
 }
+.answerBoxContainer {
+  width: 70%;
+  height: 150px;
+}
+.questionAndCategoryBox {
+  width: 70%;
+  height: 40px;
+}
+.statsContainer {
+  background-color:white; 
+  width:100%; 
+  padding:2% 5%; 
+  margin-top:10%;
+}
 
-.hide-scrollbar::-webkit-scrollbar {
-    display: none;
+@media (max-width: 600px) {
+  .questionAndCategoryBox {
+    width: 100%;
+    height:40px;
   }
-
-.hide-scrollbar {
-   -ms-overflow-style: none;  /* IE and Edge */
-   scrollbar-width: none;  /* Firefox */
+  .answerBoxContainer {
+    width: 100%;
+    height: 150px;
+  }
+  .statsContainer {
+    margin-top: 1%;
+    margin-bottom: 4%;
+  }
 }
 </style>

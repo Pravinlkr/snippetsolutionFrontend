@@ -8,9 +8,10 @@
       light
       app
     >
-      <v-toolbar-title>Snippet Solution</v-toolbar-title>
+      <v-toolbar-title class="d-none d-sm-flex">Snippet Solution</v-toolbar-title>
+      <v-toolbar-title class="d-flex d-sm-none">SS</v-toolbar-title>
       <v-spacer />
-      <div style="width:50%; height:40px">
+      <div class="searchContainer">
       <v-autocomplete 
         outlined 
         dense 
@@ -31,6 +32,22 @@
       </div>
       <v-spacer />
     <v-btn
+      class="ma-2 d-none d-md-flex"
+      outlined
+      color="indigo"
+      @click="openLoginModal()"
+    >
+      View Site As A Member
+    </v-btn>
+    <v-menu offset-y>
+      <template v-slot:activator="{ on, attrs }">
+       
+          <v-icon v-bind="attrs" class="d-flex d-md-none"
+          v-on="on"> mdi-dots-vertical </v-icon>
+        
+      </template>
+      <v-list>
+        <v-btn
       class="ma-2"
       outlined
       color="indigo"
@@ -38,6 +55,8 @@
     >
       View Site As A Member
     </v-btn>
+      </v-list>
+    </v-menu>
     </v-app-bar>
     <Login ref="LoginModal" />
     </div>
@@ -99,13 +118,29 @@ export default {
 </script>
 
 <style scoped>
-    
-    .navPadding{
-        padding: 0px 30px;
+  .searchContainer {
+    width:50%;
+    height: 40px;
+  } 
+  .navPadding{
+      padding: 0px 30px;
+  }
+  .autocompleteClass{
+    min-height: 35px !important;
+    font-size: 13px;
+  } 
+  @media (max-width: 1023px) {
+    .navPadding {
+      padding: 0px 5px;
     }
-    .autocompleteClass{
-      min-height: 35px !important;
-      font-size: 13px;
+  }
+  @media (max-width: 600px) {
+    .navPadding {
+      padding: 0px 0px;
     }
-   
+    .searchContainer {
+      width: 70%;
+      height: 40px;
+    }
+  }
 </style>

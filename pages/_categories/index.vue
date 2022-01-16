@@ -45,3 +45,13 @@ RelatedQuesitons
 
 }
 </script>
+
+<style scoped>
+ @media (max-width: 600px) {
+     .v-breadcrumbs {
+         font-size: 10px !important;
+         padding: 10px 5px;
+         line-height: 1.2;
+     }
+ }
+</style>

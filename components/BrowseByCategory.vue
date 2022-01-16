@@ -6,8 +6,8 @@
       <v-col
         v-for="category in categoriesList"
         :key="category.id"
-        xs="6"
-        md="2"
+        cols="6"
+        lg="2"
         sm="3"
       >
         <v-card
@@ -43,6 +43,7 @@ export default {
         let obj = {
           id:element._id,
           name:element.category,
+          parent: element.parent,
           path:'/'+element.category
         }
         this.categoriesList.push(obj)

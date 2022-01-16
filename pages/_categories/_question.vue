@@ -6,15 +6,15 @@
     ></v-breadcrumbs>
 
     <div class="mx-6">
-        <div><h2 class="pb-">{{questionName}}</h2></div>
-        <div style="width:90%; height:auto; font-size:16px;">
+        <div><h2>{{questionName}}</h2></div>
+        <div class="snippetContainer">
 <pre>
     <code v-highlight :class="parentCategory" v-html="answer" style="padding: 2% 5%; line-height:1.5;">
     </code>
 </pre>
         </div>
         <div class="my-6"><p>Similar Questions :</p></div>
-        <related-quesitons :categoryName="categoryName"></related-quesitons>
+        <related-quesitons></related-quesitons>
     </div>
     </div>
 </template>
@@ -57,6 +57,43 @@ export default {
             question = question.replaceAll('-',' ')
             return question
         },
+        async fetchCategory () {
+            this.categoryName = this.$route.params.categories
+            this.breadCrumbsitems[1].text = this.categoryName
+            this.breadCrumbsitems[1].href = '/'+this.categoryName
+
+            let quest = this.$route.params.question
+            this.breadCrumbsitems[2].href = '/'+quest
+            this.questionName = this.parseQuestion(quest)
+            this.breadCrumbsitems[2].text = this.questionName
+            
+            if(localStorage.getItem('categories')) {
+                this.categoryList = JSON.parse(localStorage.getItem('categories'))
+                this.categoryList.forEach(element =>{
+                    if(element.name == this.categoryName){
+                        this.parentCategory = element.parent
+                        this.categoryId = element.id
+                    }
+                })
+            } else {
+                this.categoryList = []
+                this.latestCategoryList = await axios.get(`https://snippet-solution-backend.herokuapp.com/category/list`)
+                this.latestCategoryList.data.forEach(element => {
+                    if(element.category == this.categoryName){
+                        this.parentCategory = element.parent
+                        this.categoryId = element._id
+                    }
+                    let obj = {
+                    id:element._id,
+                    name:element.category,
+                    parent: element.parent,
+                    path:'/'+element.category
+                    }
+                    this.categoryList.push(obj)
+            });
+            localStorage.setItem('categories',JSON.stringify(this.categoryList))
+            }
+        },
         async fetchQuestion(){
             this.loading = true
             this.questionArray = await axios.get(`https://snippet-solution-backend.herokuapp.com/category/${this.categoryId}`)
@@ -77,26 +114,34 @@ export default {
             this.loading = false
         }
     },
-    created(){
-        this.categoryName = this.$route.params.categories
-        this.breadCrumbsitems[1].text = this.categoryName
-        this.breadCrumbsitems[1].href = '/'+this.categoryName
+    // created(){
+    //     this.categoryName = this.$route.params.categories
+    //     this.breadCrumbsitems[1].text = this.categoryName
+    //     this.breadCrumbsitems[1].href = '/'+this.categoryName
 
-        let quest = this.$route.params.question
-        this.breadCrumbsitems[2].href = '/'+quest
-        this.questionName = this.parseQuestion(quest)
-        this.breadCrumbsitems[2].text = this.questionName
-    },
-    mounted() {
-        this.categoryList = JSON.parse(localStorage.getItem('categories'))
-        this.categoryList.forEach(element =>{
-            if(element.name == this.categoryName){
-                this.parentCategory = element.parent
-                this.categoryId = element.id
-            }
-        })
+    //     let quest = this.$route.params.question
+    //     this.breadCrumbsitems[2].href = '/'+quest
+    //     this.questionName = this.parseQuestion(quest)
+    //     this.breadCrumbsitems[2].text = this.questionName
+    // },
+    async mounted() {
+        await this.fetchCategory()
         this.fetchQuestion()
     },
 
 }
 </script>
+
+<style scoped>
+.snippetContainer{
+  width:90%; 
+  height:auto; 
+  font-size:16px;
+}
+ @media (max-width: 600px) {
+     .snippetContainer {
+         width: 100%;
+         font-size: 13px;
+     }
+ }
+</style>
